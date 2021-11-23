@@ -28,7 +28,7 @@
         <div class="modal fade" id="pagenumber" tabindex="-1" aria-labelledby="pagenumber" aria-hidden="true">
           <div class="modal-dialog">
             <div class="modal-content">
-              <form action="">
+              <form action="" id="creatform" method="get">
 
                 <div class="modal-header">
                   <h5 class="modal-title" id="pagenumber">Form Details</h5>
@@ -37,16 +37,14 @@
                 <div class="modal-body">
                   <label for="title" class="form-label">Form Title?</label>
                   <input type="text" name="title" id="title" class="form-control" />
-
                   
-                  <label for="pages"class="form-label">How Many Pages?</label>
+                  <label for="pages"class="form-label mt-3">How Many Pages?</label>
                   <input type="number" name="pages" id="pages" class="form-control" />
-                  
                 </div>
 
                 <div class="modal-footer">
                   <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
-                  <button type="button" class="btn btn-primary" onclick="console.log('pages created')" data-dismiss="modal">Next</button>
+                  <button type="button" class="btn btn-primary" onclick="newform()" data-dismiss="modal">Next</button>
                 </div>
 
               </form>
@@ -60,7 +58,7 @@
 
         <div class="card col-md-3 p-0 m-2">
           <div class="card-header">
-            <h5>College Students Data</h5>
+            <h5><a href="#">College Students Data</a></h5>
           </div>
 
           <div class="card-body">
@@ -72,7 +70,7 @@
 
         <div class="card col-md-3 p-0 m-2">
           <div class="card-header">
-            <h5>Employes Survey</h5>
+            <h5><a href="#">Employes Survey</a></h5>
           </div>
 
           <div class="card-body">
@@ -84,7 +82,7 @@
 
         <div class="card col-md-3 p-0 m-2">
           <div class="card-header">
-            <h5>Job Seekers</h5>
+            <h5><a href="#">Job Seekers</a></h5>
           </div>
 
           <div class="card-body">
@@ -96,7 +94,7 @@
 
         <div class="card col-md-3 p-0 m-2">
           <div class="card-header">
-            <h5>Gym Analysis</h5>
+            <h5><a href="#">Gym Analysis</a></h5>
           </div>
 
           <div class="card-body">

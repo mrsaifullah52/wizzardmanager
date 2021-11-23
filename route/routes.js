@@ -1,5 +1,9 @@
 import express from "express";
+import fetch from 'node-fetch';
 const router = express.Router();
+
+// controllers
+import {wizards} from '../controller/wizard.js';
 
 
 router.get("/",(req, res)=>{
@@ -7,10 +11,7 @@ router.get("/",(req, res)=>{
   }))
 });
 
-router.get("/wizards",(req, res)=>{
-  res.render("pages/wizards",({
-  }))
-});
+router.get("/wizards", wizards);
 
 router.get("/login",(req, res)=>{
   res.render("pages/login",({
@@ -20,6 +21,16 @@ router.get("/login",(req, res)=>{
 router.get("/login",(req, res)=>{
   res.render("pages/register",({
   }))
+});
+
+router.get("/data/:title/:pages", (req, res)=>{
+
+  // const response = await fetch(file);
+  // const data = await response.text();
+
+  const data = req.params;
+  res.status(200).json(data);
+
 });
 
 
