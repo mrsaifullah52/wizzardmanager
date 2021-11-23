@@ -7,5 +7,10 @@ router.get("/",(req, res)=>{
   }))
 });
 
+router.get("/wizards",(req, res)=>{
+  res.render("pages/wizards",({
+  }))
+});
+
 
 export default router;
