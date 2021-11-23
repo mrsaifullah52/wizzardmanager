@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <!-- including head component-->
-  <%- include('partials/head'); %>
+  <%- include('../partials/head'); %>
   <title>Wizard Manager</title>
 </head>
 <body>
@@ -10,18 +10,18 @@
   <header class="bg-primary">
     <div class="container">
       <!-- including navbar -->
-      <%- include('partials/navbar', {login: "no"}) %>
+      <%- include('../partials/navbar', {login: "no"}) %>
     </div>
   </header>
 
 
   <section>
     <div class="container">
-      <h1 class="text-center text-primary mt-5">Homepage</h1>
+      <h1 class="text-center text-primary mt-5">Login</h1>
     </div>
   </section>
 
   <!-- including footer component -->
-  <%- include('partials/footer') %>
+  <%- include('../partials/footer') %>
 </body>
 </html>

@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <!-- including head component-->
+  <%- include('../partials/head'); %>
+  <title>Wizards</title>
+</head>
+<body>
+  <header class="bg-primary">
+    <div class="container">
+      <!-- including navbar -->
+      <%- include('../partials/navbar', {login: "yes"}) %>
+    </div>
+  </header>
+
+
+
+
+  <!-- including plugin -->
+  <script src="js/jquery.min.js"></script>
+  <script src="js/jquery-ui.min.js"></script>
+  <script src="js/form-builder.min.js"></script>
+  <script src="js/form-render.min.js"></script>
+
+  <!-- including custom setting -->
+  <script src="js/formbuilder.js"></script>
+
+  <!-- including footer component -->
+  <%- include('../partials/footer') %>
+</body>
+</html>

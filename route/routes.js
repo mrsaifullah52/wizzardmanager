@@ -12,5 +12,15 @@ router.get("/wizards",(req, res)=>{
   }))
 });
 
+router.get("/login",(req, res)=>{
+  res.render("pages/login",({
+  }))
+});
+
+router.get("/login",(req, res)=>{
+  res.render("pages/register",({
+  }))
+});
+
 
 export default router;
