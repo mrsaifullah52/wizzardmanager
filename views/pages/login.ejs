@@ -18,7 +18,14 @@
   <section>
     <div class="container">
       <h3 class="text-center text-primary mt-5">Please Login to Continue</h3>
-      <form action="" method="get" class="w-50 m-auto mt-5" id="login">
+      <form action="/login" method="POST" class="w-50 m-auto mt-5" id="login">
+        <% if(error!=''){ %>
+          <div class="alert alert-danger" role="alert">
+            <%= error %>
+          </div>
+        <% } %>
+        
+
         <div class="input_group">
           <label for="email" class="form-label">Enter your Email:</label>
           <input type="email" name="email" id="email" class="form-control" required/>

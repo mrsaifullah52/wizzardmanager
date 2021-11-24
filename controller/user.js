@@ -1,36 +1,66 @@
 import user from '../model/user.js';
+import bcrypt from 'bcryptjs';
 
 export const login = async (req, res)=>{
   const {email, pass} = req.body;
   
   try {
-    const response = await user.find({"email":email, "password": pass});
+    const result = await user.findOne({"email":email});
 
-    if(!response.email){
-      res.status(200).json({message: "Invalid Credentials"});
+    if(result){
+      // comparing password
+      const isMatch = await bcrypt.compare(pass, result.password);
+      if(isMatch){
+        res.render("pages/login",({
+          error: ""
+        }));
+      }else{
+        res.render("pages/login",({
+          error: "Password is Incorrect!"
+        }));
+      }
+
     }else{
-      res.status(200).send(response);
+      // if we dont have any data related that email
+      res.render("pages/login",({
+        error: "User Does't Exist!"
+      }));
     }
+
   } catch (error) {
-    res.status(401).send({message: error.message});
+    res.status(401).render("pages/login",({
+      error: error.message
+    }));
   }
 }
 
 
-
 export const register = async (req, res)=>{
-  const {fname, lname, email, password} = req.body;
-
   try {
+    const {fname, lname, email, pass} = req.body;
     const userdata = {
                         "fname": fname,
                         "lname": lname,
                         "email": email,
-                        "password": password, 
+                        "password": pass, 
                       };
+
     const response = await new user(userdata).save();
-    res.status(201).send(response);
+    if(response.email){
+      res.status(201).render("pages/register",({
+        classname: "alert-success",
+        error: "Registered Successfuly!"
+      }));
+    }else{
+      res.status(201).render("pages/register",({
+        classname: "alert-danger",
+        error: "Failed to Registered!"
+      }));
+    }
   } catch (error) {
-    res.status(409).json({message: error.message});
+    res.status(409).render("pages/register",({
+      classname: "alert-danger",
+      error: error.message
+    }));
   }
 }

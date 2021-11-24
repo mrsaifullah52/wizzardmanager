@@ -18,8 +18,13 @@
   <section>
     <div class="container">
       <h3 class="text-center text-primary mt-5">Get Register Yourself with Us</h3>
-      <form action="" method="get" class="w-50 m-auto mt-5" id="register">
-        
+      <form action="/register" method="POST" class="w-50 m-auto mt-5" id="register">
+        <% if(error!=''){ %>
+          <div class="alert <%= classname %>" role="alert">
+            <%= error %>
+          </div>
+        <% } %>
+
         <div class="row">
           <div class="input_group col-md-6">
             <label for="fname" class="form-label">Enter your First Name:</label>

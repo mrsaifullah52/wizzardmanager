@@ -15,10 +15,12 @@ router.get("/",(req, res)=>{
 router.get("/wizards", wizards);
 router.get("/login", (req, res)=>{
   res.render("pages/login",({
+    error: ''
   }));
 });
 router.get("/register", (req, res)=>{
   res.render("pages/register",({
+    error: ''
   }));
 });
 
