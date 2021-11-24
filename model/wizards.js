@@ -1,6 +1,7 @@
 import mongoose from 'mongoose';
 
 const wizardSchema = mongoose.Schema({
+  uid: {type:String, unique: true, sparse: true },
   title: String,
   pages:[
     {pagelink: String}

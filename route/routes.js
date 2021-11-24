@@ -3,7 +3,8 @@ import fetch from 'node-fetch';
 const router = express.Router();
 
 // controllers
-import {wizards} from '../controller/wizard.js';
+import {wizards, addWizard} from '../controller/wizard.js';
+import {login, register} from '../controller/user.js';
 
 
 router.get("/",(req, res)=>{
@@ -12,16 +13,20 @@ router.get("/",(req, res)=>{
 });
 
 router.get("/wizards", wizards);
-
-router.get("/login",(req, res)=>{
+router.get("/login", (req, res)=>{
   res.render("pages/login",({
-  }))
+  }));
+});
+router.get("/register", (req, res)=>{
+  res.render("pages/register",({
+  }));
 });
 
-router.get("/register",(req, res)=>{
-  res.render("pages/register",({
-  }))
-});
+router.post("/wizards", addWizard);
+router.post("/login", login);
+router.post("/register", register);
+
+
 
 router.get("/data/:title/:pages", (req, res)=>{
 
