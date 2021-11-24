@@ -2,11 +2,17 @@ import user from '../model/user.js';
 
 export const login = async (req, res)=>{
   const {email, pass} = req.body;
-  try {    
+  
+  try {
     const response = await user.find({"email":email, "password": pass});
-    res.status(200).send(response);
+
+    if(!response.email){
+      res.status(200).json({message: "Invalid Credentials"});
+    }else{
+      res.status(200).send(response);
+    }
   } catch (error) {
-    res.status(401).json({message: error.message});
+    res.status(401).send({message: error.message});
   }
 }
 
@@ -14,6 +20,7 @@ export const login = async (req, res)=>{
 
 export const register = async (req, res)=>{
   const {fname, lname, email, password} = req.body;
+
   try {
     const userdata = {
                         "fname": fname,

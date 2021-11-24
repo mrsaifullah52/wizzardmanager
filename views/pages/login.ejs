@@ -18,15 +18,15 @@
   <section>
     <div class="container">
       <h3 class="text-center text-primary mt-5">Please Login to Continue</h3>
-      <form action="" method="get" class="w-50 m-auto mt-5">
+      <form action="" method="get" class="w-50 m-auto mt-5" id="login">
         <div class="input_group">
           <label for="email" class="form-label">Enter your Email:</label>
-          <input type="email" name="email" id="email" class="form-control"/>
+          <input type="email" name="email" id="email" class="form-control" required/>
         </div>
 
         <div class="input_group">
           <label for="pass" class="form-label mt-3">Enter your Passsword:</label>
-          <input type="password" name="pass" id="pass" class="form-control"/>
+          <input type="password" name="pass" id="pass" class="form-control" required/>
         </div>
 
         <div class="input_group">
@@ -44,5 +44,6 @@
 
   <!-- including footer component -->
   <%- include('../partials/footer') %>
+
 </body>
 </html>
