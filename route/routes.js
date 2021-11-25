@@ -4,20 +4,19 @@ const router = express.Router();
 
 // controllers
 import {wizards, addWizard} from '../controller/wizard.js';
-import {login, register} from '../controller/user.js';
+import {login, logout, register, showLogin} from '../controller/user.js';
 
+// importing middleware for cookie authentication
+import auth from '../middleware/auth.js';
 
 router.get("/",(req, res)=>{
   res.render("index",({
   }))
 });
 
-router.get("/wizards", wizards);
-router.get("/login", (req, res)=>{
-  res.render("pages/login",({
-    error: ''
-  }));
-});
+router.get("/wizards", auth, wizards);
+router.get("/login", showLogin);
+router.get("/logout", auth, logout);
 router.get("/register", (req, res)=>{
   res.render("pages/register",({
     error: ''

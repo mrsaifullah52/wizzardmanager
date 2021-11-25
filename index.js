@@ -3,6 +3,7 @@ import cors from 'cors';
 import bodyParser from 'body-parser';
 import Path from 'path';
 import routes from './route/routes.js';
+import cookieParser from 'cookie-parser';
 // importing database connection
 import './database/db.js';
 
@@ -14,6 +15,8 @@ app.use(cors());
 // app.use(bodyParser.json());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true}));
+// using cookieparser package
+app.use(cookieParser());
 // setting server port
 const PORT=process.env.PORT || 3333;
 // setting view engine ejs
