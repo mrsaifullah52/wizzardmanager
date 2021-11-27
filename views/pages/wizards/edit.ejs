@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <link rel="stylesheet" href="../../../css/bootstrap.min.css" >
+  <link rel="stylesheet" href="../../../css/stylesheet.css" >
+
+  <!-- including plugin -->
+  <script src="../../../js/jquery.min.js"></script>
+  <script src="../../../js/jquery-ui.min.js"></script>
+  <script src="../../../js/form-builder.min.js"></script>
+  <!-- including custom setting for form builder-->
+  <script src="../../../js/formbuilder.js"></script>
+
+
+  <title>Wizards</title>
+</head>
+<body>
+  <header class="bg-primary">
+    <div class="container">
+      <!-- including navbar -->
+      <%- include('../../partials/navbar', {login: "yes"}) %>
+    </div>
+  </header>
+
+  <section>
+    <div class="container">
+      <div id="notifications" class="my-5"></div>
+      <% if(data==''){ %>
+        <div id="build-wrap" class="mt-3">
+          <input type="hidden" name="wid" id="wid" value="<%= wid%>" />
+          <input type="hidden" name="pid" id="pid" value="<%= pid%>" />
+        </div>
+
+        <script>
+          buildForm();
+        </script>
+      <% }else{ %>
+
+        <div id="build-wrap" class="mt-3">
+          <input type="hidden" name="wid" id="wid" value="<%= data.wid %>" />
+          <input type="hidden" name="pid" id="pid" value="<%= data.pid %>" />
+          <input type="hidden" name="data" id="data" value="<%= JSON.stringify(data.form) %>" />
+        </div>
+
+        <script>
+          $(document).ready(function(){
+            const fData=$("#data").val();
+            setFormData(fData);
+          })
+        </script>
+      <% } %>
+
+    </div>
+  </section>
+
+</body>
+</html>

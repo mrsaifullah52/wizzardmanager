@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <link rel="stylesheet" href="../../../css/bootstrap.min.css" >
+  <link rel="stylesheet" href="../../../css/stylesheet.css" >
+
+  <!-- including plugin -->
+  <script src="../../../js/jquery.min.js"></script>
+  <script src="../../../js/jquery-ui.min.js"></script>
+  <script src="../../../js/form-render.min.js"></script>
+  <!-- including custom setting for form builder-->
+  <script src="../../../js/formbuilder.js"></script>
+
+  <title>Wizards</title>
+</head>
+<body>
+  <header class="bg-primary">
+    <div class="container">
+      <!-- including navbar -->
+      <%- include('../../partials/navbar', {login: "yes"}) %>
+    </div>
+  </header>
+
+  <section>
+    <div class="container">
+      <div class="row">
+        <% if(error!=''){%>
+          <div class="col-md-6 m-auto mt-5 alert <%= error.classname %>">
+            <%= error.message %> <a href="/wizards/wedit/<%= page.wid %>">Go Back</a>
+          </div>
+        <% }else{ %>
+          <div class="col-md-6 m-auto bg-light mt-5">
+            <input type="hidden" name="wid" id="wid" value="<%= page.wid %>" />
+            <input type="hidden" name="pid" id="pid" value="<%= page.pid %>" />
+            <div id="render-wrap" class="mt-3">
+              <input type="hidden" name="obj" id="obj" value="<%= JSON.stringify(page.form) %>">
+            </div>
+          </div>
+        <% } %>
+      </div>
+    </div>
+  </section>
+
+
+  <script>
+    $(document).ready(function(){
+      const data=$("#obj").val();
+      printOnScreen(data);
+    });
+  </script>
+
+</body>
+</html>

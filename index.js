@@ -2,8 +2,11 @@ import express from 'express';
 import cors from 'cors';
 import bodyParser from 'body-parser';
 import Path from 'path';
-import routes from './route/routes.js';
 import cookieParser from 'cookie-parser';
+// routers
+import routes from './route/routes.js';
+import wizards from './route/wizards.js';
+
 // importing database connection
 import './database/db.js';
 
@@ -27,7 +30,7 @@ app.use(express.static(__dirname + '/public'));
 
 // general routing
 app.use("/", routes);
-
+app.use("/wizards", wizards);
 
 // running server
 app.listen(PORT, ()=>{

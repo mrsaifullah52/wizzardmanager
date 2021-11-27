@@ -66,3 +66,33 @@
 //     xhttp.send(JSON.stringify(data));
 //   });
 // }
+
+// copyWizardLink function
+function copyWizardLink(id){
+  const url=`http://localhost:3333/wform/${id}`;
+  navigator.clipboard.writeText(url);
+  document.getElementById("copy"+id).innerHTML = "Link Copied!";
+}
+
+async function deleteWizard(wid){
+  // ask for data deletion permission
+  const url=`/wizards/delWizard/${wid}`;
+  const response=await fetch(url,{
+    method: 'DELETE'
+  });
+  if(response.status==200){
+    window.location.reload();
+  }
+}
+
+async function deleteWForm(wid, pid){
+  const url=`/wizards/deletepage/${wid}/${pid}`;
+  const response=await fetch(url,{
+    method: 'DELETE'
+  });
+  if(response.status==200){
+    window.location.reload();
+  }else{
+    console.log(response);
+  }
+}

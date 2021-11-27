@@ -3,7 +3,7 @@ import fetch from 'node-fetch';
 const router = express.Router();
 
 // controllers
-import {wizards, addWizard} from '../controller/wizard.js';
+import {wizards, addWizard, newWizard, wform, editWizard} from '../controller/wizard.js';
 import {login, logout, register, showLogin} from '../controller/user.js';
 
 // importing middleware for cookie authentication
@@ -14,7 +14,8 @@ router.get("/",(req, res)=>{
   }))
 });
 
-router.get("/wizards", auth, wizards);
+
+
 router.get("/login", showLogin);
 router.get("/logout", auth, logout);
 router.get("/register", (req, res)=>{
@@ -23,7 +24,10 @@ router.get("/register", (req, res)=>{
   }));
 });
 
-router.post("/wizards", addWizard);
+router.get("/wizard", auth, wizards);
+router.get("/createwizard", auth, newWizard);
+
+router.post("/addwizard",auth, addWizard);
 router.post("/login", login);
 router.post("/register", register);
 
