@@ -1,9 +1,9 @@
 import express from "express";
 const router = express.Router();
 
-
 // controller
-import {editWizard, editWForm, addWForm, viewWForm, delWizard, delWForm, newPage} from '../controller/wizard.js';
+import {editWizard, delWizard} from '../controller/wizard.js';
+import {editWForm, addWForm, viewWForm, delWForm, newPage} from '../controller/wpage.js';
 // middleware
 import auth from '../middleware/auth.js';
 

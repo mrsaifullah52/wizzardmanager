@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <link rel="stylesheet" href="../../css/bootstrap.min.css" >
+  <link rel="stylesheet" href="../../css/stylesheet.css" >
+  <link rel="stylesheet" href="../../DataTables/datatables.min.css">
+  <title>Wizards</title>
+</head>
+<body>
+  <header class="bg-primary">
+    <div class="container">
+      <!-- including navbar -->
+      <%- include('../partials/navbar', {login: "yes"}) %>
+    </div>
+  </header>
+
+  <section id="wizards">
+    <div class="container">
+      <!-- display alert if have any -->
+      <% if(error){ %>
+        <div class=`alert <%= classname %>` role="alert">
+          <%= error %>
+        </div>
+      <%}%>
+
+      <!-- Created Wizards -->
+      <div class="row mt-5">
+        <table id="table_id" class="display">
+          <thead>
+              <tr>
+                <th style="width:20px">#</th>
+
+                <% for(let i=0;i<th.length;i++){ %>
+                  <th><%= th[i] %></th>
+                <% } %>
+              </tr>
+          </thead>
+          <tbody>
+
+            <% if(wizard!=''){
+              for(let i=0; i<wizard.length; i++ ){ %>
+                <tr>
+                    <td style="width:20px"><%= i %></td>
+                    <% Object.keys(wizard[i].data[0]).forEach(function(key){ %>
+                      <td><%= wizard[i].data[0][key] %></td>
+                    <% }) %>
+
+                </tr>
+
+        <% }}else{
+              if(error!=''){%>
+                <p class="text-center alert <%=classname%> mt-3"><%=error%></p> 
+              <%}else{%>
+                <p class="text-center text-primary mt-5">You haven't created any Wizard yet.</p> 
+              <%}%>
+          </tbody>
+        </table>
+
+        <% } %>
+
+          <p><%=  %></p>
+
+    </div>
+  </section>
+
+
+
+  <script src="../../js/jquery.min.js"></script>
+  <script src="../../js/jquery-ui.min.js"></script>
+  <script src="../../DataTables/datatables.min.js"></script>
+
+  <script>
+    $(document).ready( function () {
+      $('#table_id').DataTable({
+      });
+    } );
+  </script>
+</body>
+</html>

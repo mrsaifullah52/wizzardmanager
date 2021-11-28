@@ -14,9 +14,7 @@ const auth = async (req, res, next)=>{
 
     next();
   } catch (error) {
-    res.status(401).render("pages/login",({
-      error: 'Please Authenticate Yourself First'
-    })); 
+    return res.status(401).redirect("/login")
   }
 }
 

@@ -21,38 +21,42 @@
 
 
   <section>
-    <div class="container">
-      <h1 class="mt-5 text-center"><%= wizard.title %></h1>
+    <% if(wizard){ %>
+      <div class="container">
+        <h1 class="mt-5 text-center"><%= wizard.title %></h1>
 
-      <div class="row mt-3">
-        <% for(let i=0; i<wizard.pages.length; i++ ){ %>
-          
-          <div class="card col-md-3 p-0 m-2">
-            <div class="card-header">
-              <h5>Page <%= i+1 %></h5>
+        <div class="row mt-3">
+          <% for(let i=0; i<wizard.pages.length; i++ ){ %>
+            
+            <div class="card col-md-3 p-0 m-2">
+              <div class="card-header">
+                <h5>Page <%= i+1 %></h5>
+              </div>
+
+              <div class="card-body">
+                <a href="/wizards/viewpage/<%= wizard._id%>/<%= wizard.pages[i].pagelink%> " 
+                  class="btn btn-info text-white m-1" target="_blank">View Output</a>
+                  
+                <a href="/wizards/editpage/<%= wizard._id%>/<%= wizard.pages[i].pagelink %>" 
+                  class="btn btn-warning text-white m-1">Edit Page</a>
+                  
+                <button onclick="deleteWForm('<%= wizard._id%>','<%= wizard.pages[i].pagelink%>')"
+                  class="btn btn-danger text-white m-1" >Delete Page</button>
+
+              </div>
             </div>
 
-            <div class="card-body">
-              <a href="/wizards/viewpage/<%= wizard._id%>/<%= wizard.pages[i].pagelink%> " 
-                class="btn btn-info text-white m-1" target="_blank">View Output</a>
-                
-              <a href="/wizards/editpage/<%= wizard._id%>/<%= wizard.pages[i].pagelink %>" 
-                class="btn btn-warning text-white m-1">Edit Page</a>
-                
-              <button onclick="deleteWForm('<%= wizard._id%>','<%= wizard.pages[i].pagelink%>')"
-                class="btn btn-danger text-white m-1" >Delete Page</button>
+          <% } %>
+        </div>
 
-            </div>
-          </div>
-
+        <% if(wizard.pages.length < 10){ %>
+          <hr>
+          <a href="/wizards/addpage/<%= wizard._id%>" class="btn btn-primary col-md-2 py-3" >Add a Page</a>
         <% } %>
       </div>
-
-      <% if(wizard.pages.length < 10){ %>
-        <hr>
-        <a href="/wizards/addpage/<%= wizard._id%>" class="btn btn-primary col-md-2 py-3" >Add a Page</a>
-      <% } %>
-    </div>
+    <% }else{ %>
+      <script>window.location.replace("/");</script>
+    <% } %>
   </section>
 
 

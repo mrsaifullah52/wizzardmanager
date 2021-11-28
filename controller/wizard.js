@@ -1,7 +1,9 @@
+import url from 'url';
 // models
 import wizard from '../model/wizards.js';
 import wForm from '../model/wForm.js';
 
+ 
 export const wizards = async (req, res)=>{
   try {
     const uid=req.user._id;
@@ -53,24 +55,15 @@ export const addWizard = async (req, res)=>{
       status: "Drafts"
     }
     const response = await new wizard(newWizard).save();
-    res.render("pages/createwizard",({
-      wizard: response
-    }));
+    return res.redirect(`/wizards/wedit/${response._id}`);
 
   } catch (error) {
     console.log(error.message);
     res.send(error.message);
   }
-
-
-
-
-  // res.render("pages/wizards",({
-  // }))
 }
 
 export const newWizard = async (req, res)=>{
-
 }
 
 export const editWizard = async (req, res)=>{
@@ -97,13 +90,17 @@ export const delWizard = async (req, res)=>{
   try {
     const wid=req.params.wid;
     const uid=req.user._id;
-    await wizard.findOneAndDelete({wid, uid});
-    const response = await wizard.find({uid})
-    res.status(200).render("pages/wizards",({
-      wizard: response,
-      error: '',
-      classname: ''
-    }));
+
+    // removing from wizards
+    await wizard.findOneAndDelete({_id:wid, uid});
+    // removing from wForm
+    await wForm.deleteMany({wid, uid},function(e,doc){
+      if(doc){
+        res.status(200).send("");
+      }else if(e){
+        res.status(400).json(e);
+      }
+    }).clone().catch(err=>console.log(err.message));
   } catch (error) {
     res.render("pages/wizards",({
       wizard: '',
@@ -113,136 +110,34 @@ export const delWizard = async (req, res)=>{
   }
 }
 
-// wizard pages
-export const newPage = async (req, res)=>{  
+export const viewWizard = async (req, res)=>{
   try {
     const wid = req.params.wid;
-    const uid = req.user._id.toString();
-    const wizardLink=uid.substr(0, uid.length-5);
+    const wizardData=await wizard.findOne({_id:wid});
+    const pages=await wForm.find({wid})
 
-    const wizards=await wizard.countDocuments({uid});
-
-    await wizard.find({_id: wid},function(e, doc){
-      if(doc){
-        const exist = doc.pages.length;
-        if(exist>0){
-          wizardLink=wizardLink+"_"+(wizards)
-        }
-      }
-
-      res.send(doc);
-
-    }).clone().catch(err=>console.log(err));
+    res.render("pages/viewWizard",({
+      wizard: wizardData,
+      pages: pages,
+      error: '',
+      message: ''
+    }));
 
   } catch (error) {
-    res.send(error)
+    res.render("pages/viewWizard",({
+      wizard: '',
+      error: {message: error.message, classname: "alert-danger"},
+      message: ''
+    }));
   }  
 }
 
-export const addWForm = async (req, res)=>{
-  try {
-    const uid = req.user._id;
-    const wid = req.params.wid;
-    const pid = req.params.pid;
-    const wBody = req.body;
+export const wizardSubmission = (req, res)=>{
+  const message=req.query.message;
+  const classname=req.query.classname;
   
-    const wData = {
-      uid: uid,
-      wid: wid,
-      pid: pid,
-      form: wBody
-    }
-    // find and update / insert new
-    const response=await wForm.findOneAndUpdate({uid,wid,pid},wData,{upsert:true});
-    res.status(201).send(response);
-  } catch (error) {
-    res.send(error.message)
-  }
-}
-
-export const editWForm = async (req, res)=>{
-  const wid=req.params.wid;
-  const pid=req.params.pid;
-  const uid=req.user._id;
-
-  const response=await wForm.find({wid,pid,uid},function(e,r){
-    if(!r.length){
-      res.render("pages/wizards/edit",({
-        pid:pid,
-        wid:wid,
-        data: ''
-      }));
-    }else{
-      console.log(r);
-      res.render("pages/wizards/edit",({
-        data: r[0]
-      }));
-    }
-  }).limit(1).clone().catch(function(err){ console.log(err)});
-}
-
-export const viewWForm = async (req, res)=>{
-  try {
-    const wid=req.params.wid;
-    const pid=req.params.pid;
-    const uid=req.user._id;
-  
-    const response=await wForm.find({uid:uid, wid:wid, pid:pid}, function(e, r){
-      if(r.length>0){
-        res.render("pages/wizards/view",({
-          page: r[0],
-          error: ''
-        }))
-      }else{
-        res.render("pages/wizards/view",({
-          page: {
-            wid: wid,
-            pid: '',
-            form: []
-          },
-          error: {message: "You haven't created any content for this page",classname: "alert-warning"}
-        }))
-      }
-    }).clone().catch(err=>console.log(err.message));
-    
-
-
-
-    // res.send(response[0]);
-
-  } catch (error) {
-    
-  }
-}
-
-export const wform = async (req, res)=>{
-  res.render("pages/wform");
-}
-
-export const delWForm = async (req, res)=>{
-  try {
-    const wid = req.params.wid;
-    const pid = req.params.pid;
-    const uid = req.user._id;
-    // const uid ="619e78ad68f3c2c02f070eb4";
-
-
-    await wizard.findOne({uid, _id:wid}, function(e,doc){
-      if(doc){
-        doc.pages=doc.pages.filter((cElem)=>{
-          return cElem.pagelink !== pid;
-        });
-        doc.save();
-      }
-    }).clone().catch(err=>console.log(err));
-
-    const response = await wForm.findOneAndDelete({pid, uid, wid}, function(e,doc){
-      if(doc){
-        res.status(200).send(doc);
-      }
-    }).clone().catch(err=>console.log(err.message))
-
-  } catch (error) {
-    res.status(400).json(error.message);
-  }
+  res.render("pages/wizardSubmission",({
+    message,
+    classname
+  }));
 }

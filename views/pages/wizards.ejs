@@ -73,13 +73,14 @@
               </div>
 
               <div class="card-body">
-                <button onclick="copyWizardLink('<%= wizard[i]._id %>')"
-                  class="btn btn-info text-white m-1" id="copy<%= wizard[i]._id %>">Share Link</button>
+                <button type="button" onclick="copyWizardLink('<%= wizard[i]._id %>')"
+                  class="btn btn-info text-white m-1" id="copy<%= wizard[i]._id %>">
+                  <i class="bi bi-eye"></i>Share Link</button>
                   
                 <a href="/wizards/wedit/<%= wizard[i]._id %>" 
                   class="btn btn-warning text-white m-1">Edit Wizard</a>
 
-                <button onclick="deleteWizard('<%= wizard[i]._id %>')"
+                <button type="button" onclick="deleteWizard('<%= wizard[i]._id %>')"
                   class="btn btn-danger text-white m-1" >Delete Wizard</button>
                   
               </div>

@@ -4,16 +4,15 @@ function buildForm(){
   var options = {
     onSave: function (evt, formData) {
       saveForm(formData);
-      // console.log(formData)
     },
     disableFields: ['autocomplete', 'date', 'hidden', 'number', 'button'],
     disabledActionButtons: ['data'],
     replaceFields: [{
       type: "header",
-      label: "Heading",
+      label: "Label",
     },{
       type: "file",
-      label: "Image Upload"
+      label: "File Upload"
     },{
       type: "textarea",
       label: "Multiline Text"
@@ -27,7 +26,7 @@ function buildForm(){
       type: "checkbox-group",
       label: "CheckBox list"
     }],
-    disabledAttrs: ["className", "access", "name", "subtype", "value", "description", "placeholder"],
+    disabledAttrs: ["className", "access", "value", "rows","type", "description", "placeholder"],
     i18n: {
       location: 'https://formbuilder.online/assets/lang/'
     }
@@ -107,8 +106,8 @@ async function saveForm(data){
   }
 }
 // get output
-function printOnScreen(formData){
-  var fbRender = document.getElementById('render-wrap');
+function printOnScreen(formData,divId){
+  var renderer = document.getElementById(divId);
 
   var formRenderOpts = {
     formData,
@@ -120,5 +119,5 @@ function printOnScreen(formData){
 
   // console.log(formData);
 
-  $(fbRender).formRender(formRenderOpts)
+  $(renderer).formRender(formRenderOpts)
 }

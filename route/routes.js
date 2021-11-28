@@ -3,8 +3,9 @@ import fetch from 'node-fetch';
 const router = express.Router();
 
 // controllers
-import {wizards, addWizard, newWizard, wform, editWizard} from '../controller/wizard.js';
+import {wizards, addWizard, newWizard, wizardSubmission, viewWizard} from '../controller/wizard.js';
 import {login, logout, register, showLogin} from '../controller/user.js';
+import {uploadWizard} from '../controller/wdata.js';
 
 // importing middleware for cookie authentication
 import auth from '../middleware/auth.js';
@@ -14,8 +15,6 @@ router.get("/",(req, res)=>{
   }))
 });
 
-
-
 router.get("/login", showLogin);
 router.get("/logout", auth, logout);
 router.get("/register", (req, res)=>{
@@ -23,25 +22,19 @@ router.get("/register", (req, res)=>{
     error: ''
   }));
 });
+// form submission by users
+router.get("/submit", wizardSubmission);
+
 
 router.get("/wizard", auth, wizards);
 router.get("/createwizard", auth, newWizard);
+router.get("/vWizard/:wid", viewWizard);
 
+router.post("/viewWizard/:wid/:uid", uploadWizard);
 router.post("/addwizard",auth, addWizard);
 router.post("/login", login);
 router.post("/register", register);
 
-
-
-router.get("/data/:title/:pages", (req, res)=>{
-
-  // const response = await fetch(file);
-  // const data = await response.text();
-
-  const data = req.params;
-  res.status(200).json(data);
-
-});
 
 
 export default router;
