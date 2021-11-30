@@ -1,16 +1,18 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <!-- including head component-->
   <%- include('../partials/head'); %>
-  <title>Wizard Manager</title>
+    <title>Wizzard Manager</title>
 </head>
+
 <body>
 
   <header class="bg-primary">
     <div class="container">
       <!-- including navbar -->
-      <%- include('../partials/navbar', {login: "no"}) %>
+      <%- include('../partials/navbar', {login: "no" }) %>
     </div>
   </header>
 
@@ -19,40 +21,40 @@
     <div class="container">
       <h3 class="text-center text-primary mt-5">Please Login to Continue</h3>
       <form action="/login" method="POST" class="w-50 m-auto mt-5" id="login">
-        <% if(error!=''){ %>
+        <% if(error!='' ){ %>
           <div class="alert alert-danger" role="alert">
             <%= error %>
           </div>
-        <% } %>
-        
+          <% } %>
 
-        <div class="input_group">
-          <label for="email" class="form-label">Enter your Email:</label>
-          <input type="email" name="email" id="email" class="form-control" required/>
-        </div>
 
-        <div class="input_group">
-          <label for="pass" class="form-label mt-3">Enter your Passsword:</label>
-          <input type="password" name="pass" id="pass" class="form-control" required/>
-        </div>
+            <div class="input_group">
+              <label for="email" class="form-label">Enter your Email:</label>
+              <input type="email" name="email" id="email" class="form-control" required />
+            </div>
 
-        <div class="input_group mt-3">
-          <input class="form-check-input" name="remember" type="checkbox" value="remember" id="remember">
-          <label class="form-check-label" for="remember">
-            Remember Me
-          </label>
-        </div>
+            <div class="input_group">
+              <label for="pass" class="form-label mt-3">Enter your Passsword:</label>
+              <input type="password" name="pass" id="pass" class="form-control" required />
+            </div>
 
-        <div class="input_group">
-          <button type="submit" class="w-100 mt-3 btn btn-primary">Login</button>
-        </div>
+            <div class="input_group mt-3">
+              <input class="form-check-input" name="remember" type="checkbox" value="remember" id="remember">
+              <label class="form-check-label" for="remember">
+                Remember Me
+              </label>
+            </div>
 
-        <div class="bottom">
-          <div class="text-primary text-center my-3">or</div>
-          <p class="text-center">Dont have an account? <a href="/register">Register now</a></p>
-        </div>
+            <div class="input_group">
+              <button type="submit" class="w-100 mt-3 btn btn-primary">Login</button>
+            </div>
+
+            <div class="bottom">
+              <div class="text-primary text-center my-3">or</div>
+              <p class="text-center">Dont have an account? <a href="/register">Register now</a></p>
+            </div>
       </form>
-      
+
     </div>
   </section>
 
@@ -60,4 +62,5 @@
   <%- include('../partials/footer') %>
 
 </body>
+
 </html>

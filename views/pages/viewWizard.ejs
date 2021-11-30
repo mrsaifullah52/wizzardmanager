@@ -1,12 +1,13 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <link rel="stylesheet" href="../css/bootstrap.min.css" >
-  <link rel="stylesheet" href="../css/stylesheet.css" >
+  <link rel="stylesheet" href="../css/bootstrap.min.css">
+  <link rel="stylesheet" href="../css/stylesheet.css">
 
   <!-- including plugin -->
   <script src="../js/jquery.min.js"></script>
@@ -15,100 +16,108 @@
   <!-- including custom setting for form builder-->
   <script src="../js/formbuilder.js"></script>
 
-  <title>Wizards</title>
+  <title>Wizzards</title>
 </head>
+
 <body>
 
   <section>
     <div class="container">
       <div class="row">
-        <% if(error!=''){%>
+        <% if(error!='' ){%>
           <div class="col-md-6 m-auto mt-5 alert <%= error.classname %>">
             <%= error.message %> <a href="">Report Error</a>
           </div>
-        <% }else if(wizard!=''){ %>
-          <form action="/viewWizard/<%= wizard._id %>/<%= wizard.uid %>" method="post" class="col-md-6 m-auto my-5 bg-light py-5 px-5">
-            <h3 class="mb-5 text-center text-primary"><%= wizard.title%></h3>
+          <% }else if(wizard!='' ){ %>
+            <form action="/viewWizard/<%= wizard._id %>/<%= wizard.uid %>" method="post"
+              class="col-md-6 m-auto my-5 bg-light py-5 px-5">
+              <h3 class="mb-5 text-center text-primary">
+                <%= wizard.title%>
+              </h3>
 
-            <div id="crouselform" class="carousel slide" data-touch="false" data-interval="false">
-              <div class="carousel-inner">
-                
-                <div class="carousel-item active">
-                  <div id="render-wrap0" name="<%= wizard.pages[0].pagelink %>">
-                    <input type="hidden" name="obj" id="obj" value="<%= JSON.stringify(pages[0].form) %>">
-                  </div>
-                </div>
-                
-                <% for(let i=1; i<wizard.pages.length; i++){  %>
-                  <% for(let j=1; j<pages.length; j++){ %>
-                    <% if(wizard.pages[i].pagelink == pages[j].pid){ %>
+              <div id="crouselform" class="carousel slide" data-touch="false" data-interval="false">
+                <div class="carousel-inner">
 
-                      <div class="carousel-item">
-                        <div id="render-wrap<%= i%>" name="<%= pages[j].pid %>">
-                          <input type="hidden" id="obj" value="<%= JSON.stringify(pages[j].form) %>">
+                  <div class="carousel-item active">
+                    <%if(wizard.pages.length>1){%>
+                      <p style="font-size: 10px;text-align: right;">Page: 1/<%=wizard.pages.length%>
+                      </p>
+                      <%}%>
+
+                        <div id="render-wrap0" name="<%= wizard.pages[0].pagelink %>">
+                          <input type="hidden" name="obj" id="obj" value="<%= JSON.stringify(pages[0].form) %>">
                         </div>
 
-                        <% if(pages.length == i+1){ %>
+                        <% if(wizard.pages.length <=1){ %>
+                          <!-- wizard has only one page -->
                           <div class="d-flex justify-content-start mt-5">
                             <button type="reset" class="btn btn-warning ">Clear All Data</button>
                             <button type="submit" class="btn btn-primary ">Submit Form</button>
                           </div>
+                          <%}%>
+                  </div>
+                  <% for(let i=1; i<wizard.pages.length; i++){ %>
+                    <% for(let j=1; j<pages.length; j++){ %>
+                      <% if(wizard.pages[i].pagelink==pages[j].pid){ %>
+
+                        <div class="carousel-item">
+                          <p style="font-size: 10px;text-align: right;">Page: <%=i+1%>/<%=wizard.pages.length%>
+                          </p>
+
+                          <div id="render-wrap<%= i%>" name="<%= pages[j].pid %>">
+                            <input type="hidden" id="obj" value="<%= JSON.stringify(pages[j].form) %>">
+                          </div>
+
+                          <% if(pages.length==i+1){ %>
+                            <div class="d-flex justify-content-start mt-5">
+                              <button type="reset" class="btn btn-warning ">Clear All Data</button>
+                              <button type="submit" class="btn btn-primary ">Submit Form</button>
+                            </div>
+                            <% } %>
+
+                        </div>
+
                         <% } %>
+                          <% } %>
+                            <% }; %>
 
-                      </div>
+                </div>
 
-                    <% } %>
+                <%if(wizard.pages.length> 1){ %>
+                  <!-- if single page -->
+                  <div class="mt-5 d-flex justify-content-between">
+                    <button class="btn btn-info" type="button" data-target="#crouselform" data-slide="prev">
+                      <span class="sr-only">Previous</span>
+                    </button>
+
+                    <button class="btn btn-info" type="button" data-target="#crouselform" data-slide="next">
+                      <span class="sr-only">Next</span>
+                    </button>
+                  </div>
                   <% } %>
-                <% }; %>
-              
+
               </div>
+            </form>
+            <% } %>
 
-              <div class="mt-5 d-flex justify-content-between">
-                <button class="btn btn-info" type="button" 
-                  data-target="#crouselform" data-slide="prev">
+              <p class="text-muted text-center">Wizzards by <a href="/">Wizzards Manager</a></p>
 
-                  <span class="sr-only">Previous</span>
-                </button>
-
-                <button class="btn btn-info" type="button" 
-                  data-target="#crouselform" data-slide="next">
-
-                  <span class="sr-only">Next</span>
-                </button>
-              </div>
-
-            </div>
-
-
-          </form>
-        <% }else{ %>
-
-          <% if(message!=''){ %>
-            <div class="col-md-5 m-auto mt-5">
-              <div class="alert alert-info">
-                <%= message.info %>. <a href="/vWizard/<%= message.wid%>">Resubmit Data</a>
-              </div>
-            </div>
-        <% }
-      } %>
       </div>
     </div>
   </section>
 
 
   <script>
-    $(document).ready(function(){
+    $(document).ready(function () {
       const obj = document.querySelectorAll("#obj");
-
-      for(let k=0; k<obj.length; k++){
-        setTimeout(printOnScreen(obj[k].value,"render-wrap"+k), k*1500);
+      for (let k = 0; k < obj.length; k++) {
+        setTimeout(printOnScreen(obj[k].value, "render-wrap" + k), k * 1500);
       }
-
-
     });
   </script>
 
   <script src="../js/bootstrap.js"></script>
-  
+
 </body>
+
 </html>

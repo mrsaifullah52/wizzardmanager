@@ -1,15 +1,17 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <!-- including head component-->
   <%- include('../partials/head'); %>
-  <title>Wizards</title>
+    <title>Wizzards</title>
 </head>
+
 <body>
   <header class="bg-primary">
     <div class="container">
       <!-- including navbar -->
-      <%- include('../partials/navbar', {login: "yes"}) %>
+      <%- include('../partials/navbar', {login: "yes" }) %>
     </div>
   </header>
 
@@ -17,90 +19,90 @@
     <div class="container">
       <!-- display alert if have any -->
       <% if(error){ %>
-        <div class=`alert <%= classname %>` role="alert">
+        <div class=`alert <%=classname %>` role="alert">
           <%= error %>
         </div>
-      <%}%>
+        <%}%>
 
-      <!-- create new model -->
-      <div class="mt-5">
-        <!-- Button trigger modal -->
-        <button type="button" class="btn btn-primary col-md-2" data-toggle="modal" data-target="#pagenumber"
-           style="height: 50px;">Create New</button>
-        <!-- Wizard Data trigger -->
-        <button type="button" class="btn btn-primary col-md-2" data-toggle="" data-target=""
-        style="height: 50px;">Wizards Data</button>
-        
-        <!-- Modal -->
-        <form action="/addwizard" id="creatform" method="post">
+          <!-- create new model -->
+          <div class="mt-5">
+            <!-- Button trigger modal -->
+            <button type="button" class="btn btn-primary col-md-2" data-toggle="modal" data-target="#pagenumber"
+              style="height: 50px;">Create New</button>
 
-          <div class="modal fade" id="pagenumber" tabindex="-1" aria-labelledby="pagenumber" aria-hidden="true">
-            <div class="modal-dialog">
-              <div class="modal-content">
+            <!-- Modal -->
+            <form action="/addwizard" id="creatform" method="post">
 
-                  <div class="modal-header">
-                    <h5 class="modal-title" id="pagenumber">Form Details</h5>
+              <div class="modal fade" id="pagenumber" tabindex="-1" aria-labelledby="pagenumber" aria-hidden="true">
+                <div class="modal-dialog">
+                  <div class="modal-content">
+
+                    <div class="modal-header">
+                      <h5 class="modal-title" id="pagenumber">Form Details</h5>
+                    </div>
+
+                    <div class="modal-body">
+                      <label for="title" class="form-label">Form Title?</label>
+                      <input type="text" name="title" id="title" class="form-control" required />
+
+                      <label for="page" class="form-label mt-3">How Many Pages?</label>
+                      <input type="number" name="page" id="page" min="1" max="10" class="form-control" required />
+                    </div>
+
+                    <div class="modal-footer">
+                      <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                      <button type="submit" class="btn btn-primary">Next</button>
+                    </div>
+
                   </div>
-                  
-                  <div class="modal-body">
-                    <label for="title" class="form-label">Form Title?</label>
-                    <input type="text" name="title" id="title" class="form-control" required/>
-                    
-                    <label for="page"class="form-label mt-3">How Many Pages?</label>
-                    <input type="number" name="page" id="page" min="1" max="10" class="form-control" required/>
-                  </div>
-
-                  <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
-                    <button type="submit" class="btn btn-primary" >Next</button>
-                  </div>
-
+                </div>
               </div>
-            </div>
+
+            </form>
           </div>
-        
-        </form>
-      </div>
 
-      <!-- Created Wizards -->
-      <div class="row mt-3">
-        <% if(wizard.length>0){
-          for(let i=0; i<wizard.length; i++ ){ %>
-          
-            <div class="card col-md-3 p-0 m-2">
-              <div class="card-header">
-                <h5><%= wizard[i].title %></h5>
-              </div>
+          <!-- Created Wizards -->
+          <div class="row mt-3">
+            <% if(wizard.length>0){
+              for(let i=0; i<wizard.length; i++ ){ %>
 
-              <div class="card-body">
-                <button type="button" onclick="copyWizardLink('<%= wizard[i]._id %>')"
-                  class="btn btn-info text-white m-1" id="copy<%= wizard[i]._id %>">
-                  <i class="bi bi-eye"></i>Share Link</button>
-                  
-                <a href="/wizards/wedit/<%= wizard[i]._id %>" 
-                  class="btn btn-warning text-white m-1">Edit Wizard</a>
+                <div class="card col-md-3 p-0 m-2">
+                  <div class="card-header">
+                    <h5>
+                      <%= wizard[i].title %>
+                    </h5>
+                  </div>
 
-                <button type="button" onclick="deleteWizard('<%= wizard[i]._id %>')"
-                  class="btn btn-danger text-white m-1" >Delete Wizard</button>
-                  
-              </div>
-            </div>
+                  <div class="card-body">
+                    <button type="button" onclick="copyWizardLink('<%= wizard[i]._id %>')"
+                      class="btn btn-info text-white m-1" id="copy<%= wizard[i]._id %>">
+                      <i class="bi bi-eye"></i>Share Link</button>
 
-        <% }}else{
-              if(error!=''){%>
-                <p class="text-center alert <%=classname%> mt-3"><%=error%></p> 
-              <%}else{%>
-                <p class="text-center text-primary mt-5">You haven't created any Wizard yet.</p> 
-              <%}%>
-          %>
-                 
-        <% } %>
+                    <a href="/wizards/wedit/<%= wizard[i]._id %>" class="btn btn-warning text-white m-1">Edit Wizzard</a>
+
+                    <button type="button" onclick="deleteWizard('<%= wizard[i]._id %>')"
+                      class="btn btn-danger text-white m-1">Delete Wizzard</button>
+
+                  </div>
+                </div>
+
+                <% }}else{ if(error!='' ){%>
+                  <p class="text-center alert <%=classname%> mt-3">
+                    <%=error%>
+                  </p>
+                  <%}else{%>
+                    <p class="text-center text-primary mt-5">You haven't created any Wizzard yet.</p>
+                    <%}%>
+                      %>
+
+                      <% } %>
 
 
-    </div>
+          </div>
   </section>
 
   <!-- including footer component -->
   <%- include('../partials/footer') %>
 </body>
+
 </html>

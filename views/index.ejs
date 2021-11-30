@@ -1,27 +1,35 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <!-- including head component-->
   <%- include('partials/head'); %>
-  <title>Wizard Manager</title>
+    <title>Wizzard Manager</title>
 </head>
+
 <body>
 
   <header class="bg-primary">
     <div class="container">
       <!-- including navbar -->
-      <%- include('partials/navbar', {login: "no"}) %>
+      <%- include('partials/navbar', {login}) %>
     </div>
   </header>
 
-
-  <section>
+  <!-- Banner -->
+  <section class="banner-img">
     <div class="container">
-      <h1 class="text-center text-primary mt-5">Homepage</h1>
+      <div class="text">
+        <h1 class="display-4">Wizzard Manager</h1>
+        <p class="lead vw-75 m-auto">Wizzard Manager is a cloud-based questionnaire and survey solution
+          and powerful tool to customize form questions.</p>
+      </div>
+    </div>
     </div>
   </section>
 
   <!-- including footer component -->
   <%- include('partials/footer') %>
 </body>
+
 </html>

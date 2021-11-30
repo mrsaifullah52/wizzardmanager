@@ -1,28 +1,31 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <!-- including head component-->
   <%- include('../partials/head'); %>
-  <title>Wizards</title>
+    <title>Wizzards</title>
 </head>
+
 <body>
   <header class="bg-primary">
     <div class="container">
       <!-- including navbar -->
-      <%- include('../partials/navbar', {login: "yes"}) %>
+      <%- include('../partials/navbar', {login}) %>
     </div>
   </header>
 
   <section>
     <div class="container">
       <div class="alert mt-5 w-50 m-auto <%=classname%>">
-        <%= message %>
+        <%= message %> <a href="/vWizard/<%=wid%>">Resubmit Data</a>
       </div>
     </div>
   </section>
-  
-  
+
+
   <!-- including footer component -->
   <%- include('../partials/footer') %>
 </body>
+
 </html>

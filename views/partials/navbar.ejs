@@ -1,10 +1,9 @@
 <nav class="navbar navbar-expand-lg navbar-light">
-  
-  <a class="navbar-brand text-white" href="/">Wizard Manager</a>
-  
-  <button class="navbar-toggler bg-white" type="button" data-toggle="collapse" 
-    data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" 
-    aria-expanded="false" aria-label="Toggle navigation">
+
+  <a class="navbar-brand text-white" href="/">Wizzard Manager</a>
+
+  <button class="navbar-toggler bg-white" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+    aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
   </button>
 
@@ -16,22 +15,22 @@
       </li>
 
       <li class="nav-item">
-        <a class="nav-link text-white" href="/wizard">Wizards</a>
+        <a class="nav-link text-white" href="/wizard">Wizzards</a>
       </li>
 
       <li class="nav-item">
-        <a class="nav-link text-white" href="/wdata">Wizard Data</a>
+        <a class="nav-link text-white" href="/wdata">Wizzard Data</a>
       </li>
 
-      <% if(login=="yes"){ %>
+      <% if(login=="yes" ){ %>
         <li class="nav-item">
           <a class="nav-link text-white" href="/logout">Logout?</a>
         </li>
-      <% }else{ %>
-        <li class="nav-item">
-          <a class="nav-link text-white" href="/login">Login</a>
-        </li>
-      <% } %>
+        <% }else{ %>
+          <li class="nav-item">
+            <a class="nav-link text-white" href="/login">Login</a>
+          </li>
+          <% } %>
 
 
     </ul>
