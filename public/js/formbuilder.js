@@ -82,8 +82,9 @@ async function saveForm(data) {
   // sending data to server realtime
   const pid = document.getElementById('pid').value;
   const wid = document.getElementById('wid').value;
+  const uid = document.getElementById('uid').value;
   // sending request
-  const response = await fetch(`/wizards/addwform/${wid}/${pid}`, {
+  const response = await fetch(`/wizards/addwform/${wid}/${uid}/${pid}`, {
     method: 'POST',
     mode: 'cors',
     credentials: 'same-origin',

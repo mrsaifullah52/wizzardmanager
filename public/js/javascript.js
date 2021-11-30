@@ -22,8 +22,8 @@ async function deleteWizard(wid) {
 }
 
 // delete page inside wizard
-async function deleteWForm(wid, pid) {
-  const url = `/wizards/deletepage/${wid}/${pid}`;
+async function deleteWForm(wid, uid, pid) {
+  const url = `/wizards/deletepage/${wid}/${uid}/${pid}`;
   // sending deletion request
   const response = await fetch(url, {
     method: 'DELETE'
