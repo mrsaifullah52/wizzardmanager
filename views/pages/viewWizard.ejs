@@ -48,8 +48,8 @@
                 <%= wizard.title%>
               </h3>
 
-              <% for(let i=0; i<wizard.pages.length-1; i++){ %>
-                <% for(let j=0; j<pages.length-1; j++){ %>
+              <% for(let i=0; i<wizard.pages.length; i++){ %>
+                <% for(let j=0; j<pages.length; j++){ %>
                   <% if(wizard.pages[i].pagelink==pages[j].pid){ %>
 
                     <fieldset>
@@ -137,7 +137,6 @@
       const obj = document.querySelectorAll("#obj");
       for (let k = 0; k < obj.length; k++) {
         // rendering each page one by one
-        console.log("obj sending");
         setTimeout(printOnScreen(obj[k].value, "render-wrap" + k), k * 1500);
       }
 
