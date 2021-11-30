@@ -10,8 +10,16 @@ import jwt from 'jsonwebtoken';
 export const wizards = async (req, res) => {
   try {
     const uid = req.user._id;
-    const response = await wizard.find({ uid })
+    const role = req.user.role;
+    let response;
+    if(role=="user"){
+      response= await wizard.find({ uid })
+    }else{
+      response= await wizard.find();
+    }
+
     res.render("pages/wizards", ({
+      uid: uid.toString(),
       wizard: response,
       error: '',
       classname: ''
@@ -73,9 +81,14 @@ export const editWizard = async (req, res) => {
   try {
     const wid = req.params.wid;
     const uid = req.user._id;
-
+    const role = req.user.role;
+    let data;
     // finding individual wizzard details
-    const data = await wizard.find({ uid: uid, _id: wid });
+    if(role=="user"){
+      data = await wizard.find({ uid: uid, _id: wid });
+    }else{
+      data = await wizard.find({ _id: wid });
+    }
 
     res.render("pages/createwizard", ({
       wizard: data[0]

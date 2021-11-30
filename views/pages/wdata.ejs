@@ -4,7 +4,7 @@
 <head>
   <!-- including head component-->
   <%- include('../partials/head'); %>
-    <link rel="stylesheet" href="DataTables/datatables.min.css">
+    <link rel="stylesheet" href="datatables/datatables.min.css">
     <title>Wizzards Data</title>
 </head>
 
@@ -48,7 +48,7 @@
                       </td>
                       <td>
                         <a class="btn btn-primary m-1" href="wdata/view/<%= wizard[i]._id %>">View</a>
-                        <a class="btn btn-danger m-1" href="wdata/del/<%= wizard[i]._id %>">Del Wizzard Data</a>
+                        <a class="btn btn-danger m-1" href="wdata/del/<%= wizard[i]._id %>/<%= wizard[i].uid %>">Del Wizzard Data</a>
                       </td>
                     </tr>
 
@@ -65,7 +65,7 @@
 
     <script src="js/jquery.min.js"></script>
     <script src="js/jquery-ui.min.js"></script>
-    <script src="DataTables/datatables.min.js"></script>
+    <script src="datatables/datatables.min.js"></script>
 
     <script>
       // 

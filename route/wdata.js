@@ -8,6 +8,6 @@ import auth from '../middleware/auth.js';
 
 wdata.get("/", auth, wizards);
 wdata.get("/view/:wid", auth, viewWizardData)
-wdata.get("/del/:wid", auth, delWizardData)
+wdata.get("/del/:wid/:uid", auth, delWizardData)
 
 export default wdata;

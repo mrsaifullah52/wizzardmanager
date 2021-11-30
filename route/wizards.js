@@ -10,12 +10,12 @@ import auth from '../middleware/auth.js';
 
 wizards.get("/wedit/:wid", auth, editWizard);
 wizards.get("/viewpage/:wid/:pid", auth, viewWForm);
-wizards.get("/editpage/:wid/:pid", auth, editWForm);
-wizards.get("/addpage/:wid", auth, newPage);
+wizards.get("/editpage/:wid/:uid/:pid", auth, editWForm);
+wizards.get("/addpage/:wid/:uid", auth, newPage);
 
-wizards.post("/addwform/:wid/:pid", auth, addWForm);
+wizards.post("/addwform/:wid/:uid/:pid", auth, addWForm);
 
 wizards.delete("/delWizard/:wid", auth, delWizard);
-wizards.delete("/deletepage/:wid/:pid", auth, delWForm);
+wizards.delete("/deletepage/:wid/:uid/:pid", auth, delWForm);
 
 export default wizards;

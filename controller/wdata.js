@@ -110,22 +110,17 @@ export const viewWizardData = async (req, res) => {
 export const delWizardData = async (req, res) => {
   try {
     const wid = req.params.wid;
-    const uid = req.user._id;
+    const uid = req.params.uid;
     
     // removing all entries
     const response = await wdata.deleteMany({ wid, uid });
-
-    if (response.deletedCount > 0) {
-      return res.redirect("/wdata")
-    } else {
-      res.redner("pages/wdata", ({
-        wizard: '',
-        error: "Failed to Delete, try again!",
-        classname: 'alert-warning'
-      }))
-    }
+    return res.redirect("/wdata");
 
   } catch (error) {
-    res.json(error);
+    res.redner("pages/wdata", ({
+      wizard: '',
+      error: "Failed to Delete, try again!",
+      classname: 'alert-warning'
+    }))
   }
 }

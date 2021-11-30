@@ -9,7 +9,7 @@ import wForm from '../model/wForm.js';
 export const newPage = async (req, res) => {
   try {
     const wid = req.params.wid;
-    const uid = req.user._id.toString();
+    const uid = req.params.uid;
     // generating link for it
     let wizardLink = uid.substr(0, uid.length - 5);
     const response = await wizard.findOne({ _id: wid }, function (e, doc) {
@@ -31,7 +31,7 @@ export const newPage = async (req, res) => {
 // store content of wizzard pages
 export const addWForm = async (req, res) => {
   try {
-    const uid = req.user._id;
+    const uid = req.params.uid;
     const wid = req.params.wid;
     const pid = req.params.pid;
     const wBody = req.body;
@@ -54,7 +54,7 @@ export const addWForm = async (req, res) => {
 export const editWForm = async (req, res) => {
   const wid = req.params.wid;
   const pid = req.params.pid;
-  const uid = req.user._id;
+  const uid = req.params.uid;
 
   // finding previous data for related page
   const response = await wForm.find({ wid, pid, uid }, function (e, r) {
@@ -62,6 +62,7 @@ export const editWForm = async (req, res) => {
       res.render("pages/wizards/edit", ({
         pid: pid,
         wid: wid,
+        uid:uid,
         data: ''
       }));
     } else {
@@ -77,10 +78,9 @@ export const viewWForm = async (req, res) => {
   try {
     const wid = req.params.wid;
     const pid = req.params.pid;
-    const uid = req.user._id;
 
     // finding page content
-    const response = await wForm.find({ uid: uid, wid: wid, pid: pid }, function (e, r) {
+    const response = await wForm.find({ wid: wid, pid: pid }, function (e, r) {
       if (r.length > 0) {
         res.render("pages/wizards/view", ({
           page: r[0],
@@ -98,13 +98,15 @@ export const viewWForm = async (req, res) => {
       }
     }).clone().catch(err => console.log(err.message));
 
-
-
-
-    // res.send(response[0]);
-
   } catch (error) {
-
+    res.render("pages/wizards/view", ({
+      page: {
+        wid: wid,
+        pid: '',
+        form: []
+      },
+      error: { message: "Oops! it seems we have nothing for this page. You can", classname: "alert-warning" }
+    }))
   }
 }
 
@@ -113,7 +115,8 @@ export const delWForm = async (req, res) => {
   try {
     const wid = req.params.wid;
     const pid = req.params.pid;
-    const uid = req.user._id;
+    const uid = req.params.uid;
+
     // removing from wizard
     await wizard.findOne({ uid, _id: wid }, function (e, doc) {
       if (doc) {
