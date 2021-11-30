@@ -57,14 +57,3 @@ header .navbar .navbar-nav a:hover::after{
   align-items: center;
   justify-content: center;
 }
-
-/* viewWizard page styling */
-#wizardform fieldset {
-  display: none;
-}
-#wizardform .invalid {
-  outline: 5px solid #ffdddd;
-}
-#wizardform .valid {
-  outline: 5px solid #deffdd;
-}

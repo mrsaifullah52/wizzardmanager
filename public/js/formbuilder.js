@@ -117,7 +117,7 @@ async function saveForm(data) {
 // display form from JSON
 function printOnScreen(formData, divId) {
   var renderer = document.getElementById(divId);
-
+  console.log(divId);
   var formRenderOpts = {
     formData,
     dataType: 'json',

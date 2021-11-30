@@ -17,6 +17,18 @@
   <!-- including custom setting for form builder-->
   <script src="../js/formbuilder.js"></script>
 
+  <style>
+    fieldset {
+      display: none;
+    }
+    .invalid {
+      outline: 5px solid #ffdddd;
+    }
+    .valid {
+      outline: 5px solid #deffdd;
+    }
+  </style>
+
   <title>Wizzard Manager</title>
 </head>
 
@@ -36,13 +48,14 @@
                 <%= wizard.title%>
               </h3>
 
-              <% for(let i=0; i<wizard.pages.length; i++){ %>
-                <% for(let j=0; j<pages.length; j++){ %>
+              <% for(let i=0; i<wizard.pages.length-1; i++){ %>
+                <% for(let j=0; j<pages.length-1; j++){ %>
                   <% if(wizard.pages[i].pagelink==pages[j].pid){ %>
-                    <fieldset class="">
+
+                    <fieldset>
                       <p style="font-size: 10px;text-align: right;">Page: <%=i+1%>/<%=wizard.pages.length%>
                       </p>
-                      <div id="render-wrap<%= i%>" name="<%= pages[j].pid %>">
+                      <div id="render-wrap<%= i %>" name="<%= pages[j].pid %>">
                         <input type="hidden" id="obj" value="<%= JSON.stringify(pages[j].form) %>">
                       </div>
 
@@ -86,13 +99,11 @@
     $(document).ready(function () {
       const page = document.querySelectorAll("fieldset");
       page[0].style.display = "block";
-
       $("button#prev").on("click", function () {
         const num = parseInt($(this).val());
         page[num].style.display = "none";
         page[num - 1].style.display = "block";
       });
-
       $("button#next").on("click", function () {
         const num = parseInt($(this).val());
         if (isValid()) {
@@ -100,7 +111,6 @@
           page[num].style.display = "none";
         }
       });
-
       function isValid() {
         let valid = true;
         $("fieldset:visible").find("input, select, textarea").each(function () {
@@ -120,7 +130,6 @@
             valid = true;
           }
         });
-
         return valid;
       }
 
@@ -128,6 +137,7 @@
       const obj = document.querySelectorAll("#obj");
       for (let k = 0; k < obj.length; k++) {
         // rendering each page one by one
+        console.log("obj sending");
         setTimeout(printOnScreen(obj[k].value, "render-wrap" + k), k * 1500);
       }
 
