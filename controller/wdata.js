@@ -1,10 +1,11 @@
+// url module to use url.formate method
 import url from 'url';
 
 // models
 import wdata from '../model/wData.js';
 import wizardform from '../model/wizards.js';
 
-// upload wizard form submission
+// upload wizard form submission controller
 export const uploadWizard = async (req, res) => {
   try {
     const uid = req.params.uid;
@@ -15,8 +16,8 @@ export const uploadWizard = async (req, res) => {
       wid,
       data: req.body
     }
-
-    const response = await new wdata(form).save();
+    // adding into database
+    await new wdata(form).save();
     return res.redirect(url.format({
       pathname: '/submit',
       query: {
@@ -37,12 +38,14 @@ export const uploadWizard = async (req, res) => {
   }
 }
 
+// display wizzards for data
 export const wizards = async (req, res) => {
   try {
     const uid = req.user._id;
     const role = req.user.role;
     let response;
 
+    // checking user role
     if (role == "user") {
       response = await wizardform.find({ uid });
     } else {
@@ -63,17 +66,20 @@ export const wizards = async (req, res) => {
   }
 }
 
+// view individual wizzard data
 export const viewWizardData = async (req, res) => {
   try {
     const wid = req.params.wid;
     const uid = req.user._id;
     const role = req.user.role;
     let response;
+    // checking user role
     if (role == "user") {
       response = await wdata.find({ wid, uid });
     } else {
       response = await wdata.find({ wid });
     }
+
     if (response.length > 0) {
       const th = Object.keys(response[0].data[0]);
       res.render("pages/viewWData", ({
@@ -91,7 +97,6 @@ export const viewWizardData = async (req, res) => {
       }));
     }
   } catch (error) {
-    // res.json({messag: error.message})
     res.render("pages/viewWData", ({
       wizard: '',
       th: '',
@@ -101,11 +106,13 @@ export const viewWizardData = async (req, res) => {
   }
 }
 
+// delete individual wizard data only (submitted by users)
 export const delWizardData = async (req, res) => {
   try {
     const wid = req.params.wid;
     const uid = req.user._id;
-
+    
+    // removing all entries
     const response = await wdata.deleteMany({ wid, uid });
 
     if (response.deletedCount > 0) {

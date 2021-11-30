@@ -5,7 +5,7 @@
   <!-- including head component-->
   <%- include('../partials/head'); %>
     <link rel="stylesheet" href="DataTables/datatables.min.css">
-    <title>Wizzards</title>
+    <title>Wizzards Data</title>
 </head>
 
 <body>
@@ -25,9 +25,9 @@
         </div>
         <%}%>
 
-          <!-- Created Wizards -->
+          <!-- Display Wizards -->
           <div class="row mt-5">
-            <table id="table_id" class="display">
+            <table id="wizard_table" class="display">
               <thead>
                 <tr>
                   <th style="width:20px">#</th>
@@ -68,11 +68,11 @@
     <script src="DataTables/datatables.min.js"></script>
 
     <script>
+      // 
       $(document).ready(function () {
-        $('#table_id').DataTable({
+        $('#wizard_table').DataTable({
           ordering: false,
         });
-
       });
     </script>
 </body>

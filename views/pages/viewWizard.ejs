@@ -16,7 +16,7 @@
   <!-- including custom setting for form builder-->
   <script src="../js/formbuilder.js"></script>
 
-  <title>Wizzards</title>
+  <title>Wizzard Manager</title>
 </head>
 
 <body>
@@ -108,9 +108,11 @@
 
 
   <script>
+    // rendering pages
     $(document).ready(function () {
       const obj = document.querySelectorAll("#obj");
       for (let k = 0; k < obj.length; k++) {
+        // rendering each page one by one
         setTimeout(printOnScreen(obj[k].value, "render-wrap" + k), k * 1500);
       }
     });

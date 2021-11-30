@@ -1,9 +1,9 @@
 import express from "express";
 import jwt from 'jsonwebtoken';
-const router = express.Router();
+const generalroute = express.Router();
 
 // controllers
-import { wizards, addWizard, newWizard, wizardSubmission, viewWizard } from '../controller/wizard.js';
+import { wizards, addWizard, wizardSubmission, viewWizard } from '../controller/wizard.js';
 import { login, logout, register, showLogin } from '../controller/user.js';
 import { uploadWizard } from '../controller/wdata.js';
 
@@ -11,7 +11,7 @@ import { uploadWizard } from '../controller/wdata.js';
 import auth from '../middleware/auth.js';
 
 // homepage
-router.get("/", async (req, res) => {
+generalroute.get("/", async (req, res) => {
   try {
     // checking if user is logged in
     const login = await jwt.verify(req.cookies.jwt, process.env.SECRET_ID);
@@ -27,26 +27,23 @@ router.get("/", async (req, res) => {
   }
 });
 
-router.get("/login", showLogin);
-router.get("/logout", auth, logout);
-router.get("/register", (req, res) => {
+generalroute.get("/login", showLogin);
+generalroute.get("/logout", auth, logout);
+generalroute.get("/register", (req, res) => {
   res.render("pages/register", ({
     error: ''
   }));
 });
 // wizzard submission by users
-router.get("/submit", wizardSubmission);
+generalroute.get("/submit", wizardSubmission);
+generalroute.get("/wizard", auth, wizards);
+generalroute.get("/vWizard/:wid", viewWizard);
 
 
-router.get("/wizard", auth, wizards);
-router.get("/createwizard", auth, newWizard);
-router.get("/vWizard/:wid", viewWizard);
-
-router.post("/viewWizard/:wid/:uid", uploadWizard);
-router.post("/addwizard", auth, addWizard);
-router.post("/login", login);
-router.post("/register", register);
+generalroute.post("/viewWizard/:wid/:uid", uploadWizard);
+generalroute.post("/addwizard", auth, addWizard);
+generalroute.post("/login", login);
+generalroute.post("/register", register);
 
 
-
-export default router;
+export default generalroute;

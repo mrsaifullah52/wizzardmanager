@@ -1,6 +1,8 @@
-// create empty 
+// display form building tools 
 function buildForm() {
+  // where to display
   var elment = document.getElementById("build-wrap");
+  // formbuilder options
   var options = {
     onSave: function (evt, formData) {
       saveForm(formData);
@@ -31,8 +33,10 @@ function buildForm() {
       location: 'https://formbuilder.online/assets/lang/'
     }
   };
+  // rendering into HTML
   $(elment).formBuilder(options);
 }
+
 // if already stored
 function setFormData(data) {
   var elment = document.getElementById("build-wrap");
@@ -72,11 +76,13 @@ function setFormData(data) {
     formBuilder.actions.setData(data);
   });
 }
+
 // store to database
 async function saveForm(data) {
   // sending data to server realtime
   const pid = document.getElementById('pid').value;
   const wid = document.getElementById('wid').value;
+  // sending request
   const response = await fetch(`/wizards/addwform/${wid}/${pid}`, {
     method: 'POST',
     mode: 'cors',
@@ -93,19 +99,21 @@ async function saveForm(data) {
   const dismiseNote = () => {
     note.remove();
   }
+
   if (response.status == 201) {
     note.innerHTML = "Page has been Saved";
     note.setAttribute("class", "alert alert-success");
     notifications.appendChild(note);
-    setTimeout(dismiseNote, 5000);
+    setTimeout(dismiseNote, 3000);
   } else {
     note.innerHTML = "Failed to Store!";
     note.setAttribute("class", "alert alert-danger");
     notifications.appendChild(note);
-    setTimeout(dismiseNote, 5000);
+    setTimeout(dismiseNote, 3000);
   }
 }
-// get output
+
+// display form from JSON
 function printOnScreen(formData, divId) {
   var renderer = document.getElementById(divId);
 
@@ -116,8 +124,5 @@ function printOnScreen(formData, divId) {
       location: 'https://formbuilder.online/assets/lang/'
     },
   };
-
-  // console.log(formData);
-
   $(renderer).formRender(formRenderOpts)
 }

@@ -9,7 +9,7 @@
   <link rel="stylesheet" href="../../css/bootstrap.min.css">
   <link rel="stylesheet" href="../../css/stylesheet.css">
   <link rel="stylesheet" href="../../DataTables/datatables.min.css">
-  <title>Wizzards</title>
+  <title>Wizzard Manager</title>
 </head>
 
 <body>
@@ -40,7 +40,7 @@
                     <th>
                       <%= th[i] %>
                     </th>
-                    <% } %>
+                  <% } %>
                 </tr>
               </thead>
               <tbody>
@@ -55,7 +55,6 @@
                         <%= wizard[i].data[0][key] %>
                       </td>
                       <% }) %>
-
                   </tr>
 
                   <% }} %>
@@ -71,6 +70,7 @@
   <script src="../../DataTables/datatables.min.js"></script>
 
   <script>
+    // displaying table
     $(document).ready(function () {
       $('#wdata').DataTable({
         responsive: true

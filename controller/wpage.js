@@ -1,16 +1,17 @@
+
 import url from 'url';
 // models
 import wizard from '../model/wizards.js';
 import wForm from '../model/wForm.js';
 
 
-// wizard pages
+// add new page in wizzard
 export const newPage = async (req, res) => {
   try {
     const wid = req.params.wid;
     const uid = req.user._id.toString();
+    // generating link for it
     let wizardLink = uid.substr(0, uid.length - 5);
-
     const response = await wizard.findOne({ _id: wid }, function (e, doc) {
       if (doc) {
         const exist = doc.pages.length;
@@ -27,6 +28,7 @@ export const newPage = async (req, res) => {
   }
 }
 
+// store content of wizzard pages
 export const addWForm = async (req, res) => {
   try {
     const uid = req.user._id;
@@ -48,11 +50,13 @@ export const addWForm = async (req, res) => {
   }
 }
 
+// display wizard page form(display previous data if any)
 export const editWForm = async (req, res) => {
   const wid = req.params.wid;
   const pid = req.params.pid;
   const uid = req.user._id;
 
+  // finding previous data for related page
   const response = await wForm.find({ wid, pid, uid }, function (e, r) {
     if (!r.length) {
       res.render("pages/wizards/edit", ({
@@ -61,7 +65,6 @@ export const editWForm = async (req, res) => {
         data: ''
       }));
     } else {
-      // console.log(r);
       res.render("pages/wizards/edit", ({
         data: r[0]
       }));
@@ -69,12 +72,14 @@ export const editWForm = async (req, res) => {
   }).limit(1).clone().catch(function (err) { console.log(err) });
 }
 
+// view output of wizzard's individual page
 export const viewWForm = async (req, res) => {
   try {
     const wid = req.params.wid;
     const pid = req.params.pid;
     const uid = req.user._id;
 
+    // finding page content
     const response = await wForm.find({ uid: uid, wid: wid, pid: pid }, function (e, r) {
       if (r.length > 0) {
         res.render("pages/wizards/view", ({
@@ -103,10 +108,7 @@ export const viewWForm = async (req, res) => {
   }
 }
 
-export const wform = async (req, res) => {
-  res.render("pages/wform");
-}
-
+// delete wizzard page
 export const delWForm = async (req, res) => {
   try {
     const wid = req.params.wid;

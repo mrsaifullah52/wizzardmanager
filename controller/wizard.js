@@ -1,10 +1,12 @@
-import url from 'url';
 // models
 import wizard from '../model/wizards.js';
 import wForm from '../model/wForm.js';
+import wData from '../model/wData.js';
+
+// jsonwebtoken to verify login token
 import jwt from 'jsonwebtoken';
 
-
+// display all created wizard forms
 export const wizards = async (req, res) => {
   try {
     const uid = req.user._id;
@@ -22,6 +24,7 @@ export const wizards = async (req, res) => {
   }
 }
 
+// create new wizzard form
 export const addWizard = async (req, res) => {
   try {
     let uid = req.user._id.toString();
@@ -30,10 +33,10 @@ export const addWizard = async (req, res) => {
     let pages = [];
     let position = 1;
 
-    // checking existing wizard's count  
+    // checking existing wizzard's count  
     const wizards = await wizard.countDocuments({ uid });
 
-    // generating links
+    // generating links for form
     if (wizards > 0) {
       position = wizards + 1;
       wizardLink = uid.substr(0, uid.length - 5) + "_" + position;
@@ -55,25 +58,24 @@ export const addWizard = async (req, res) => {
       link: wizardLink,
       status: "Drafts"
     }
+
+    // storing new wizzard details
     const response = await new wizard(newWizard).save();
     return res.redirect(`/wizards/wedit/${response._id}`);
-
   } catch (error) {
     console.log(error.message);
     res.send(error.message);
   }
 }
 
-export const newWizard = async (req, res) => {
-}
-
+// edit/open wizzard form
 export const editWizard = async (req, res) => {
   try {
     const wid = req.params.wid;
     const uid = req.user._id;
-    const data = await wizard.find({ uid: uid, _id: wid });
 
-    // res.send(data);
+    // finding individual wizzard details
+    const data = await wizard.find({ uid: uid, _id: wid });
 
     res.render("pages/createwizard", ({
       wizard: data[0]
@@ -87,6 +89,7 @@ export const editWizard = async (req, res) => {
   }
 }
 
+// delete wizzard form
 export const delWizard = async (req, res) => {
   try {
     const wid = req.params.wid;
@@ -102,6 +105,15 @@ export const delWizard = async (req, res) => {
         res.status(400).json(e);
       }
     }).clone().catch(err => console.log(err.message));
+    // removing wizzard data(submitted by users)
+    await wData.deleteMany({ wid, uid }, function (e, doc) {
+      if (doc) {
+        res.status(200).send("");
+      } else if (e) {
+        res.status(400).json(e);
+      }
+    }).clone().catch(err => console.log(err.message));
+
   } catch (error) {
     res.render("pages/wizards", ({
       wizard: '',
@@ -111,10 +123,13 @@ export const delWizard = async (req, res) => {
   }
 }
 
+// display wizzard form to users
 export const viewWizard = async (req, res) => {
   try {
     const wid = req.params.wid;
+    // finding wizzard details
     const wizardData = await wizard.findOne({ _id: wid });
+    // finding wizzard pages details
     const pages = await wForm.find({ wid })
 
     res.render("pages/viewWizard", ({
@@ -133,6 +148,7 @@ export const viewWizard = async (req, res) => {
   }
 }
 
+// display message to user(after form submission) 
 export const wizardSubmission = async (req, res) => {  
   try {
     // checking if user is logged in

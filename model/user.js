@@ -2,7 +2,7 @@ import mongoose from 'mongoose';
 import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
 
-// user document in mongodb
+// user schema details
 const userSchema = mongoose.Schema({
   email: { type: String, unique: true, sparse: true, required: true },
   password: { type: String, required: true },

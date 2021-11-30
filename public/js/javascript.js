@@ -8,8 +8,8 @@ function copyWizardLink(id) {
 
 // delete wizard
 async function deleteWizard(wid) {
-  // ask for data deletion permission
   const url = `/wizards/delWizard/${wid}`;
+  // sending deletion request
   const response = await fetch(url, {
     method: 'DELETE'
   });
@@ -24,6 +24,7 @@ async function deleteWizard(wid) {
 // delete page inside wizard
 async function deleteWForm(wid, pid) {
   const url = `/wizards/deletepage/${wid}/${pid}`;
+  // sending deletion request
   const response = await fetch(url, {
     method: 'DELETE'
   });

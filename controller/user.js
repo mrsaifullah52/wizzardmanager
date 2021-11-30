@@ -1,6 +1,9 @@
+// models
 import user from '../model/user.js';
+// bcrypt to encrypt password
 import bcrypt from 'bcryptjs';
 
+// login controller
 export const login = async (req, res) => {
   const { email, pass, remember } = req.body;
   try {
@@ -9,6 +12,7 @@ export const login = async (req, res) => {
       // comparing password
       const isMatch = await bcrypt.compare(pass, result.password);
       if (isMatch) {
+
         // setting cookie
         const token = await result.getToken();
         var hour = 3600000;
@@ -26,6 +30,7 @@ export const login = async (req, res) => {
           })
           return res.redirect("/");
         }
+
       } else {
         res.render("pages/login", ({
           error: "Password is Incorrect!"
@@ -33,7 +38,7 @@ export const login = async (req, res) => {
       }
 
     } else {
-      // if we dont have any data related that email
+      // if we dont have any data related to that email
       res.render("pages/login", ({
         error: "User Does't Exist!"
       }));
@@ -46,6 +51,7 @@ export const login = async (req, res) => {
   }
 }
 
+// registeration controller
 export const register = async (req, res) => {
   try {
     const { fname, lname, email, pass } = req.body;
@@ -63,17 +69,16 @@ export const register = async (req, res) => {
         error: "Existing User, Try different Email!"
       }));
     } else {
+      // creating new user
       const response = await new user(userdata).save();
       // generating token
       const token = await response.getToken();
-
       res.cookie("jwt", token, {
         httpOnly: true
-      })
-        .status(201).render("pages/register", ({
-          classname: "alert-success",
-          error: "Registered Successfuly!",
-        }));
+      }).status(201).render("pages/register", ({
+        classname: "alert-success",
+        error: "Registered Successfuly!",
+      }));
     }
   } catch (error) {
     res.status(409).render("pages/register", ({
@@ -83,6 +88,7 @@ export const register = async (req, res) => {
   }
 }
 
+// stop displaying login page when user loggedin
 export const showLogin = (req, res) => {
   const jwt = req.cookies.jwt;
   if (jwt) {
@@ -94,6 +100,7 @@ export const showLogin = (req, res) => {
   }
 }
 
+// logout controller
 export const logout = async (req, res) => {
   try {
     // removing jwt token from database

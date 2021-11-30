@@ -1,4 +1,4 @@
-/* customizing bootstrap */
+/* customizing bootstrap navbar */
 header .navbar .navbar-brand{
   font-weight: bold;
 }
@@ -47,4 +47,13 @@ header .navbar .navbar-nav a:hover::after{
   transform: translate(-50%, -50%);
   color: white;
   font-size: 4.5rem;
+}
+
+/* 404 errorpage */
+.errorpage .content{
+  margin-top: 10vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
 }

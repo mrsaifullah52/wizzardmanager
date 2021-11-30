@@ -21,16 +21,17 @@
       <li class="nav-item">
         <a class="nav-link text-white" href="/wdata">Wizzard Data</a>
       </li>
-
+      
+      <!-- user login status -->
       <% if(login=="yes" ){ %>
         <li class="nav-item">
           <a class="nav-link text-white" href="/logout">Logout?</a>
         </li>
-        <% }else{ %>
+      <% }else{ %>
           <li class="nav-item">
             <a class="nav-link text-white" href="/login">Login</a>
           </li>
-          <% } %>
+      <% } %>
 
 
     </ul>
