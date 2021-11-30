@@ -1,6 +1,7 @@
 // copyWizardLink function
 function copyWizardLink(id) {
-  const url = `http://localhost:3333/vWizard/${id}`;
+  const host=window.location.hostname;
+  const url = `${host}/vWizard/${id}`;
   navigator.clipboard.writeText(url);
   document.getElementById("copy" + id).innerHTML = "Link Copied!";
 }
