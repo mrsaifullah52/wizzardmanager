@@ -37,11 +37,11 @@
   <section>
     <div class="container">
       <div class="row">
-        <% if(error!='' ){%>
-          <div class="col-md-6 m-auto mt-5 alert <%= error.classname %>">
-            <%= error.message %> <a href="">Report Error</a>
+        <% if(error!=""){%>
+          <div class="col-md-6 m-auto my-5 alert <%= error.classname %>">
+            <%= error.message %> <a href="/">Go Back</a>
           </div>
-          <% }else if(wizard!='' ){ %>
+        <% }else if(wizard!=""){ %>
             <form action="/viewWizard/<%= wizard._id %>/<%= wizard.uid %>" method="post"
               class="col-md-6 m-auto my-5 bg-light py-5 px-5" id="wizardform">
               <h3 class="mb-5 text-center text-primary">
@@ -86,9 +86,9 @@
               <% }; %>
 
             </form>
-          <% } %>
+        <% }%>
 
-              <p class="text-muted text-center">Wizzards by <a href="/">Wizzards Manager</a></p>
+          <p class="text-muted text-center">Wizzards by <a href="/">Wizzards Manager</a></p>
 
       </div>
     </div>
