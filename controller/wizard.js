@@ -135,11 +135,18 @@ export const viewWizard = async (req, res) => {
     // finding wizzard pages details
     const pages = await wForm.find({ wid })
 
-    if(wizardData.length>0){
+    if(pages.length>0){
       res.render("pages/viewWizard", ({
         "wizard": wizardData,
         "pages": pages,
         "error": ''
+      }));
+    }else{
+      res.render("pages/viewWizard", ({
+        "wizard": '',
+        "pages": '',
+        "error": { message: "Opps! the wizzard has been removed by Owner",
+                 classname: "alert-danger" }
       }));
     }
 
